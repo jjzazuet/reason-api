@@ -1,7 +1,11 @@
-repositories { jcenter() }
+buildscript { repositories { jcenter() } }
 
+plugins { id "com.jfrog.bintray" version "1.7.3" }
+apply plugin: 'maven-publish'
 apply plugin: 'groovy'
 apply plugin: 'jacoco'
+
+repositories { jcenter() }
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
@@ -11,3 +15,30 @@ version = '1.0.0'
 dependencies { testCompile "org.spockframework:spock-core:[1.0-groovy-2.4,)" }
 task sourceJar(type: Jar) { from sourceSets.main.allJava }
 
+publishing {
+   publications {
+      mavenJava(MavenPublication) {
+         from components.java
+         artifact sourceJar { classifier "sources" }
+      }
+   }
+}
+
+bintray {
+   user = 'jjzazuet'
+   key = System.console().readLine('Api key:')
+   publications = ['mavenJava']
+   pkg {
+      repo = 'net-tribe7'
+      name = 'reason-api'
+      userOrg = 'jjzazuet'
+      licenses = ['Unlicense']
+      vcsUrl = 'https://github.com/jjzazuet/reason-api.git'
+      labels = ['api', 'utility', 'base']
+      publicDownloadNumbers = true
+      version {
+         name = '1.0.0'
+         desc = 'Reason API components.'
+      }
+   }
+}
