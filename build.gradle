@@ -1,0 +1,13 @@
+repositories { jcenter() }
+
+apply plugin: 'groovy'
+apply plugin: 'jacoco'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+group = 'net.tribe7.reason'
+version = '1.0.0'
+
+dependencies { testCompile "org.spockframework:spock-core:[1.0-groovy-2.4,)" }
+task sourceJar(type: Jar) { from sourceSets.main.allJava }
+
