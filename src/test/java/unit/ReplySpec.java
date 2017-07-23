@@ -41,6 +41,46 @@ public class ReplySpec {{
       assertEquals(r.getStatus(), BAD);
       assertEquals(r.getMessage(), Reply.MESSAGE_DEFAULT);
     });
+    it("always has an error message when an exception error cause is set, and a custom message is provided.", () -> {
+      String oopsMsg = "this method oops'ed";
+      Reply r = new Reply().bad(new IllegalStateException("oops"), oopsMsg);
+      assertTrue(r.isBad());
+      assertEquals(r.getStatus(), BAD);
+      assertEquals(r.getMessage(), oopsMsg);
+    });
+    it("always has an error message when an exception error cause is set, and no explicit message is provided.", () -> {
+      String oops = "oops...";
+      Reply r = new Reply().bad(new IllegalStateException(oops), null);
+      assertTrue(r.isBad());
+      assertEquals(r.getStatus(), BAD);
+      assertEquals(r.getMessage(), oops);
+    });
+    it("always has an error message when an exception error cause is set, and no explicit message is provided in any payload.", () -> {
+      Reply r = new Reply().bad(new IllegalStateException(), null);
+      assertTrue(r.isBad());
+      assertEquals(r.getStatus(), BAD);
+      assertEquals(r.getMessage(), Reply.MESSAGE_DEFAULT);
+    });
+    it("always has an error message when an error cause is set, and a custom message is provided.", () -> {
+      String oopsMsg = "this method oops'ed";
+      Reply r = new Reply().bad(new Object(), oopsMsg);
+      assertTrue(r.isBad());
+      assertEquals(r.getStatus(), BAD);
+      assertEquals(r.getMessage(), oopsMsg);
+    });
+    it("always has an error message when an error cause is set, and no explicit message is provided.", () -> {
+      String oops = "oops...";
+      Reply r = new Reply().bad(new Object(), null);
+      assertTrue(r.isBad());
+      assertEquals(r.getStatus(), BAD);
+      assertEquals(r.getMessage(), Reply.MESSAGE_DEFAULT);
+    });
+    it("always has an error message when an error cause is set, and no explicit message is provided in any payload.", () -> {
+      Reply r = new Reply().bad(new Object(), null);
+      assertTrue(r.isBad());
+      assertEquals(r.getStatus(), BAD);
+      assertEquals(r.getMessage(), Reply.MESSAGE_DEFAULT);
+    });
     it("always has an OK status if a payload was assigned, and holds no additional error information.", () -> {
       Reply<Long> r = new Reply<Long>().ok(0L);
       assertEquals(r.getMessage(), Reply.MESSAGE_DEFAULT);
@@ -70,9 +110,15 @@ public class ReplySpec {{
       assertTrue(r.isBad());
       assertEquals(r.getMessage(), myCustomMsg);
     });
-    it("guarantees that a failed command will always have a readable text message.", () -> {
+    it("guarantees that a failed command caused by an exception will always have a readable text message.", () -> {
       String oops = "";
       Reply r = new Reply().bad(new IllegalStateException(oops));
+      assertNotNull(r.getMessage());
+      assertTrue(r.getMessage().length() > 0);
+    });
+    it("guarantees that a failed command not caused by an exception will always have a readable text message.", () -> {
+      String oops = "";
+      Reply r = new Reply().bad(new Object(), oops);
       assertNotNull(r.getMessage());
       assertTrue(r.getMessage().length() > 0);
     });

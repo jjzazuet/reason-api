@@ -139,7 +139,9 @@ public class Reply<T> {
    */
   public Reply<T> bad(Object error, String errorMessage) {
     setError(error);
-    this.message = errorMessage;
+    if (errorMessage != null && errorMessage.trim().length() > 0) {
+      setMessage(errorMessage);
+    }
     return this;
   }
 
