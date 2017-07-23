@@ -10,11 +10,11 @@ repositories { jcenter() }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 group = 'net.tribe7.reason'
-version = '2.0.0'
+version = '2.0.1'
 
 dependencies {
-  compile "junit:junit:4.12"
-  compile "io.github.j8spec:j8spec:3.0.0"
+  testCompile "junit:junit:4.12"
+  testCompile "io.github.j8spec:j8spec:3.0.0"
 }
 task sourceJar(type: Jar) { from sourceSets.main.allJava }
 
@@ -29,7 +29,7 @@ publishing {
 
 bintray {
   user = 'jjzazuet'
-  key = 'lol' // System.console().readLine('Api key:')
+  key = 'lol'
   publications = ['mavenJava']
   pkg {
     repo = 'net-tribe7'
@@ -40,7 +40,7 @@ bintray {
     labels = ['api', 'utility', 'base']
     publicDownloadNumbers = true
     version {
-      name = '2.0.0'
+      name = '2.0.1'
       desc = 'Reason API components.'
     }
   }
