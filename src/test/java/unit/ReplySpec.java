@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 import static net.tribe7.reason.Reply.Status.*;
 
 @RunWith(J8SpecRunner.class)
-public class ReplySpec {{
+public class ReplySpec { static {
   context("A reply", () -> {
     it("enumerates status values.", () -> {
       for (Reply.Status status : values()) { System.out.println(status); }

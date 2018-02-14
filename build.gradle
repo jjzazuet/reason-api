@@ -10,7 +10,7 @@ repositories { jcenter() }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 group = 'net.tribe7.reason'
-version = '2.0.1'
+version = '2.0.2'
 
 dependencies {
   testCompile "junit:junit:4.12"
@@ -40,7 +40,7 @@ bintray {
     labels = ['api', 'utility', 'base']
     publicDownloadNumbers = true
     version {
-      name = '2.0.1'
+      name = project.version
       desc = 'Reason API components.'
     }
   }
